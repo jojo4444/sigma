@@ -1,2 +1,7 @@
 cmake_minimum_required(VERSION 3.16)
-add_executable(main main.cpp)
+
+project(sigma)
+
+set(SOURCE_EXE main.cpp)
+
+add_executable(main ${SOURCE_EXE})
