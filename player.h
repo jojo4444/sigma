@@ -19,6 +19,6 @@ public:
 private:
 	const Word* dict;
 	int hp;
-	vector<char> let;
+	std::vector<char> let;
 };
 #endif

@@ -1,9 +1,9 @@
 #include "player.h"
 
-Player::Player(Word *dict_) hp(0), dict(dict_) {
+Player::Player(Word *dict_): hp(0), dict(dict_) {
 }
 
-Player::~Player(Word *dict) {
+Player::~Player() {
 }
 
 int Player::getHp() const {
