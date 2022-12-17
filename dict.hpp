@@ -1,3 +1,6 @@
+#ifndef DICT_HEADER
+#define DICT_HEADER
+
 #include <iostream>
 #include <fstream>
 #include <random>
@@ -46,3 +49,5 @@ void makeunique(vector<T>& v) {
 	std::sort(v.begin(), v.end());
 	v.erase(unique(v.begin(), v.end()), v.end());
 }
+
+#endif

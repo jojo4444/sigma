@@ -1,3 +1,6 @@
+#ifndef TRIE_HEADER
+#define TRIE_HEADER
+
 #include <string>
 #include <string.h>
 #include <vector>
@@ -32,3 +35,5 @@ private:
 	int it;
 	std::vector<Node> nodes;
 };
+
+#endif
