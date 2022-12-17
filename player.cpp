@@ -1,4 +1,4 @@
-#include<player.h>
+#include "player.h"
 
 Player::Player(Word *dict_) hp(0), dict(dict_) {
 }
