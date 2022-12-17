@@ -9,7 +9,7 @@ public:
 	char[] GetLet() const;
 
 	<bool, hp-, hp+> Go(word);
-	void UpdHp(int dh); /// hp_ += dh
+	void UpdHp(int dh);
 	string[] GetHints();
 
 private:
