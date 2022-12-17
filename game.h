@@ -24,6 +24,7 @@ private:
 	Player a, b;
 	vector<tuple<string, int, int>> hints;
 	set<string> used;
+	void addLetterToPlayer(Player&, int cnt);
 };
 #endif
 
