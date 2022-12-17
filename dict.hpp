@@ -6,15 +6,22 @@
 #include <random>
 #include <vector>
 #include <algorithm>
+#include <utility>
 #include <tuple>
 
 #include "trie.hpp"
 
 using std::vector;
+using std::pair;
 
 const int LIMIT_HINTS = 44;
 const int MIN_LEN_WORD = 5;
 
+/*
+инварианты:
+1. add >= 0
+2. del >= 0
+*/
 struct wordStat {
 	int add, del;
 
@@ -30,8 +37,10 @@ public:
 
 	char getLet() const;
 	bool find(const string& word) const;
+	void del(const string& word);
+
 	wordStat getWordStat(const string& word) const;
-	vector<string> getHints(const vector<char>& let) const;
+	vector<pair<string, wordStat> > getHints(const vector<char>& let) const;
 
 private:
 	mutable string buffWord_;

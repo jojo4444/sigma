@@ -1,4 +1,5 @@
 #include "dict.hpp"
+#include "game.hpp"
 
 int main() {
 	Dict d;
@@ -9,13 +10,16 @@ int main() {
 	std::cout << "\n";
 
 	vector<char> let = {'a', 'a', 'b', 'o', 'd', 't', 'c', 'c'};
-	vector<string> hints = d.getHints(let);
+	vector<pair<string, wordStat> > hints = d.getHints(let);
 
 	std::cout << hints.size() << "\n";
 
-	for (string w : hints) {
-		std::cout << w << " ";
+	for (auto [w, s] : hints) {
+		std::cout << w << " " << s.add << " " << s.del << "\n"; 
 	}
+	std::cout << "\n";
+
+	Game g(&d);
 	
 	return 0;
 }

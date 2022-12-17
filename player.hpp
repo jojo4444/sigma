@@ -1,19 +1,33 @@
-#include Words
+#ifndef PLAYER_H
+#define PLAYER_H
+
+#include <string>
+#include <vector>
+#include <map>
+#include <algorithm>
+
+using std::vector;
+using std::string;
 
 class Player {
 public:
-	Player(dict);
-	~Player();
+	Player(int hp);
 
-	int GetHp() const;
-	char[] GetLet() const;
+	bool makeTurn(const string& word);
+	void addNewLetters(const vector<char>& nlet);
 
-	<bool, hp-, hp+> Go(word);
-	void UpdHp(int dh);
-	string[] GetHints();
+	int getHp() const;
+	void updHp(int dh);
+
+	vector<char> getLets() const;
+	void addLetter(char c);
 
 private:
-	const Word* dict_;
 	int hp_;
-	char[] let_;
+	vector<char> let_;
+
+	void erraseLetters(const string& word);
+	bool checkWordLetters(const string& word) const;
 };
+
+#endif

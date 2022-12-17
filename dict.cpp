@@ -65,12 +65,16 @@ bool Dict::find(const string& word) const {
 	return t_.find(word);
 }
 
+void Dict::del(const string& word) {
+	return t_.del(word);
+}
+
 wordStat Dict::getWordStat(const string& word) const {
 	// todo: нужна формула
 	return wordStat();
 }
 
-vector<string> Dict::getHints(const vector<char>& let) const {
+vector<pair<string, wordStat> > Dict::getHints(const vector<char>& let) const {
 	buffWord_.resize(0);
 	buffHints_.resize(0);
 	buffLet_ = let;
@@ -91,10 +95,10 @@ vector<string> Dict::getHints(const vector<char>& let) const {
 	}
 
 	// чтобы итоговая память была строго O(min(LIM, |inDict|)) снаружи
-	vector<string> res;
+	vector<pair<string, wordStat> > res;
 	res.reserve(inDict.size()); 
 	for (const string& w : inDict) {
-		res.push_back(w);
+		res.emplace_back(w, getWordStat(w));
 	}
 
 	return res;
