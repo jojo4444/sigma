@@ -1,48 +1,50 @@
-#include "game.h"
+#include "game.hpp"
 
-Game::Game(Dict *dict_): a(0), b(0), dict(dict_){
-    addLetterToPlayer(a, 10);
-    addLetterToPlayer(b, 10);
+Game::Game(Dict *dict): alice_(DEFAULT_PLAYER_HP), bob_(DEFAULT_PLAYER_HP), dict_(dict) {
+    if (dict_ == nullptr) {
+        std::cerr << "empty dictionary\n";
+        exit(-1);        
+    }
+    alice_.addNewLetters(generateLetters(DEFAULT_PLAYER_LETTERS_COUNT));
+    bob_.addNewLetters(generateLetters(DEFAULT_PLAYER_LETTERS_COUNT));
+    hints_ = dict_->getHints(alice_.getLets());
 }
 
-Game::~Game(){
-
+vector<pair<string, wordStat> > Game::getHints() const {
+    return hints_;
 }
 
-bool Game::go(const std::string& word, int step){
-    if (used.count(word)){
+bool Game::go(const std::string& word, int step) {
+    if (!dict_->find(word)){
         return false;
     }
-    if (!dict->find(word)){
-        return false;
-    }
-    auto& current = a, opposite = b;
-    if (step == 2){
+    Player& current = alice_, opposite = bob_;
+    if (step == 2) {
         std::swap(current, opposite);
     }
-    if (!current.go(word)){
+    if (!current.makeTurn(word)) {
         return false;
     }
-    auto stat = dict->getWordStat(word);
-    current.updHp(stat.add);
-    opposite.updHp(-stat.del);
-    used.insert(word);
+    wordStat stat = dict_->getWordStat(word);
+    dict_->del(word);
 
-    addLetterToPlayer(current, word.size());
+    opposite.updHp(-stat.del);
+    current.updHp(stat.add);
+    current.addNewLetters(generateLetters(word.size()));
+
+    hints_ = dict_->getHints(opposite.getLets());
 
     return true;
 }
 
 bool Game::finish() const {
-    return a.getHp() <= 0 || b.getHp() <= 0; 
+    return alice_.getHp() <= 0 || bob_.getHp() <= 0; 
 }
 
-void Game::addLetterToPlayer(Player& player, int cnt){
+vector<char> Game::generateLetters(int cnt) {
+    vector<char> res(cnt);
     for(int i = 0; i < cnt; ++i){
-        player.addLetter(dict->getLet());
+        res[i] = dict_->getLet();
     }
-}
-
-vector<string> Game::getHints(const Player& player) const{
-    return dict->getHints(player.getLet());
+    return res;
 }
