@@ -1,6 +1,7 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "dict.hpp"
 #include "player.h"
 #include <tuple>
 #include <vector>
@@ -24,7 +25,8 @@ private:
 	Player a, b;
 	vector<tuple<string, int, int>> hints;
 	set<string> used;
-	void addLetterToPlayer(Player&, int cnt);
+	void addLetterToPlayer(Player&, int);
+	vector<string> getHints(const Player&) const;
 };
 #endif
 

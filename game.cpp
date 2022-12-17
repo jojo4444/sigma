@@ -1,6 +1,6 @@
 #include "game.h"
 
-Game::Game(Dict *dict_): a(dict_), b(dict_), dict(dict_){
+Game::Game(Dict *dict_): a(0), b(0), dict(dict_){
     addLetterToPlayer(a, 10);
     addLetterToPlayer(b, 10);
 }
@@ -20,17 +20,17 @@ bool Game::go(const std::string& word, int step){
     if (step == 2){
         std::swap(current, opposite);
     }
-    auto [ok, heal, damage] = current.go(word);
-    if (!ok){
+    if (!current.go(word)){
         return false;
     }
-    current.updHp(heal);
-    opposite.updHp(damage);
+    auto stat = dict->getWordStat(word);
+    current.updHp(stat.add);
+    opposite.updHp(stat.del);
     used.insert(word);
 
     addLetterToPlayer(current, word.size());
 
-    return ok;
+    return true;
 }
 
 bool Game::finish() const {
@@ -41,4 +41,8 @@ void Game::addLetterToPlayer(Player& player, int cnt){
     for(int i = 0; i < cnt; ++i){
         player.addLetter(dict->getLet());
     }
+}
+
+vector<string> Game::getHints(const Player& player) const{
+    return dict->getHints(player.getLet());
 }
