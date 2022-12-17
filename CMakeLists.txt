@@ -8,14 +8,8 @@ set(SOURCE_DICT dict.cpp trie.cpp)
 
 add_library(dict STATIC ${SOURCE_DICT})
 
+add_library(game STATIC player.cpp game.cpp)
+
 add_executable(app ${SOURCE_EXE})
 
-target_link_libraries(app dict)
-add_library(player STATIC player.cpp)
-
-add_library(game STATIC game.cpp)
-
-add_executable(main ${SOURCE_EXE})
-
-target_link_libraries(main  game
-							player)
+target_link_libraries(app dict game)
