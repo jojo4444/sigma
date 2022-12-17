@@ -4,4 +4,10 @@ project(sigma)
 
 set(SOURCE_EXE main.cpp)
 
-add_executable(main ${SOURCE_EXE})
+set(SOURCE_DICT dict.cpp trie.cpp)
+
+add_library(dict STATIC ${SOURCE_DICT})
+
+add_executable(app ${SOURCE_EXE})
+
+target_link_libraries(app dict)

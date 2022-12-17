@@ -1,30 +1,21 @@
-#include <iostream>
-
-// #include player, game, ..
+#include "dict.hpp"
 
 int main() {
-	Terminal; 
+	Dict d;
 
-	Word dict;
-	Game(dict);
-
-	int step = 1;
-
-	Terminal.Paint(step, Game);
-
-	while (true) {
-		std::string word = Terminal.GetToken();
-		if (word == "!q") {
-			break;
-		}
-		if (Game.Go(word, step)) {
-			step = 3 - step;
-			Terminal.Paint(step, Game);
-		}
-		if (Game.Finish()) {
-			break;
-		}
+	for (int i = 0; i < 100; ++i) {
+		std::cout << d.getLet();
 	}
+	std::cout << "\n";
 
+	vector<char> let = {'a', 'a', 'b', 'o', 'd', 't', 'c', 'c'};
+	vector<string> hints = d.getHints(let);
+
+	std::cout << hints.size() << "\n";
+
+	for (string w : hints) {
+		std::cout << w << " ";
+	}
+	
 	return 0;
 }
