@@ -13,7 +13,7 @@ bool Game::go(const std::string& word, int step){
     if (used.count(word)){
         return false;
     }
-    if (dict->find(word)){
+    if (!dict->find(word)){
         return false;
     }
     auto& current = a, opposite = b;
@@ -25,7 +25,7 @@ bool Game::go(const std::string& word, int step){
     }
     auto stat = dict->getWordStat(word);
     current.updHp(stat.add);
-    opposite.updHp(stat.del);
+    opposite.updHp(-stat.del);
     used.insert(word);
 
     addLetterToPlayer(current, word.size());
