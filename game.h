@@ -1,4 +1,4 @@
-#include <player.h>
+#include "player.h"
 #include <tuple>
 #include <vector>
 #include <set>
@@ -11,7 +11,7 @@ public:
 	Game(Word* dict);
 	~Game();
 
-	bool go(std::string word, int step);
+	bool go(const std::string& word, int step);
 	bool finish() const;
 
 private:
