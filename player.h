@@ -1,9 +1,9 @@
+#ifndef PLAYER_H
+#define PLAYER_H
+
 #include "words.hpp"
 #include <vector>
 #include <tuple>
-
-#ifndef PLAYER_H
-#define PLAYER_H
 
 class Player {
 public:
@@ -11,8 +11,8 @@ public:
 	~Player();
 
 	int getHp() const;
-	std::vector<char> getLet() const;
-	std::tuple<bool, int, int> go(std::string word);
+	std::vector<char>& getLet() const;
+	std::tuple<bool, int, int> go(const std::string&);
 	void updHp(int dh);
 	std::vector<std::string> getHints();
 

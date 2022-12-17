@@ -10,7 +10,7 @@ int Player::getHp() const {
     return hp;
 }
 
-std::vector<char> Player::getLet() const {
+std::vector<char>& Player::getLet() const {
     return let;
 }
 
@@ -18,10 +18,10 @@ void Player::updHp(int dh) {
     hp += dh;
 }
 
-std::tuple<bool, int, int> Player::go(std::string word) {
-
+std::tuple<bool, int, int> Player::go(const std::string& word) {
+    
 }
 
-std::vector<std::string>  Player::getHints() {
+std::vector<std::string> Player::getHints() {
     
 }
