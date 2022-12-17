@@ -6,19 +6,24 @@
 #include <vector>
 #include <set>
 
+using std::vector;
+using std::set;
+using std::tuple;
+using std::string;
+
 class Game {
 public:
-	Game(Word* dict);
+	Game(Dict* dict);
 	~Game();
 
-	bool go(const std::string& word, int step);
+	bool go(const string& word, int step);
 	bool finish() const;
 
 private:
-	const Word* dict;
+	const Dict* dict;
 	Player a, b;
-	std::vector<std::tuple<std::string, int, int>> hints;
-	std::set<std::string> used;
+	vector<tuple<string, int, int>> hints;
+	set<string> used;
 };
 #endif
 

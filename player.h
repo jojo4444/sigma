@@ -1,24 +1,33 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include "words.hpp"
+#include "dict.hpp"
 #include <vector>
 #include <tuple>
+#include <map>
+
+using std::vector;
+using std::tuple;
+using std::string;
+
 
 class Player {
 public:
-	Player(Word* dict_);
+	Player(Dict* dict_);
 	~Player();
 
 	int getHp() const;
-	std::vector<char>& getLet() const;
-	std::tuple<bool, int, int> go(const std::string&);
+	vector<char> getLet() const;
+	void addLetter(char);
+	tuple<bool, int, int> go(const string&);
 	void updHp(int dh);
-	std::vector<std::string> getHints();
+	vector<string> getHints() const;
 
 private:
-	const Word* dict;
+	const Dict* dict;
 	int hp;
-	std::vector<char> let;
+	vector<char> let;
+	void erraseLetters(const string&);
+	bool checkWordLetters(const string&) const;
 };
 #endif
