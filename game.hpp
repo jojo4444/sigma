@@ -2,13 +2,16 @@
 
 class Game {
 public:
-	Game();
+	Game(dict);
 	~Game();
+
 	bool Go(word, step);
-	<char[][], color[][]> GetMap();
+	bool Finish() const;
 
 private:
 	Player a_, b_; /// Alice, Bob xddd
 	<string, hp-, hp+>[] hints_;
-	string[] used_;
+	set<string> used_;
 };
+
+// <char[][], color[][]> GetMap() ---> Terminal

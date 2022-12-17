@@ -2,14 +2,18 @@
 
 class Player {
 public:
-	Player();
+	Player(dict);
 	~Player();
-	<bool, hp-, hp+> Go(word);
+
 	int GetHp() const;
 	char[] GetLet() const;
-	void updHp(dh);
+
+	<bool, hp-, hp+> Go(word);
+	void UpdHp(int dh); /// hp_ += dh
+	string[] GetHints();
 
 private:
+	const Word* dict_;
 	int hp_;
 	char[] let_;
 };
