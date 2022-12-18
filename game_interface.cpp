@@ -8,10 +8,28 @@ GameInterface::GameInterface(const Game& g) {
 		} 
 	}
 	initTab();
-	paint(g);
+	draw(g, 1);
 }
 
-void GameInterface::paint(const Game& g) const {
+void GameInterface::draw(const Game& g, int player) {
+	// todo: player for bg color
+
+	for (int p = 1; p <= 2; ++p) {
+		clearInput(p);
+		clearHp(p);
+	} 
+	clearHints();
+	
+	Player alice = g.getPlayer(1);
+	Player bob = g.getPlayer(2);
+
+	drawHp(alice.getHp(), 1);
+	drawHp(bob.getHp(), 2);
+	drawLetters(alice.getLets(), 1);
+	drawLetters(bob.getLets(), 2);
+
+	drawHints(g.getHints());
+
 	toBeginCol();
 	shiftRow(DEFAULT_H - 1);
 	for (int i = DEFAULT_H - 1; i >= 0; --i) {
@@ -25,15 +43,34 @@ void GameInterface::paint(const Game& g) const {
 	std::cout << std::flush;
 }
 
-string GameInterface::getToken() const {
-	string res;
-	while (true) {
-		char c = hgetch();
-		if (c == '\n') {
-			return res;
-		}
-		res.push_back(c);
+void GameInterface::drawInput(const string& word, wordStat s, int player) {
+	int r = player == 1 ? 18 : 8;
+	int c = 12;
+
+	clearInput(player);
+	for (int j = 0; j < word.size(); ++j) {
+		tab[r][c + 1 + j].sym = convert(word[j]);
 	}
+	if (s.correct()) {
+		string add = std::to_string(s.add);
+		string del = std::to_string(s.del);
+		for (int j = 0; j < add.size(); ++j) {
+			tab[r][c + 16 + j].sym = convert(add[j]);
+		}
+		for (int j = 0; j < del.size(); ++j) {
+			tab[r][c + 24 + j].sym = convert(del[j]);
+		}
+	} 
+
+	toBeginCol();
+	shiftRow(r);
+	shiftCol(c);
+	for (int i = 0; i < 30; ++i) {
+		tab[r][c + i].paint();
+	}
+	toBeginCol();
+	shiftRow(-r);
+	shiftCol(DEFAULT_W);
 }
 
 void GameInterface::initTab() {
@@ -89,8 +126,8 @@ void GameInterface::initTab() {
 
 	write(20, 4, " hp ");
 	write(20, 19, " enter word ");
-	write(20, 47, " hint hp+ ");
-	write(20, 68, " hint hp- ");
+	write(20, 47, " hint hp- ");
+	write(20, 68, " hint hp+ ");
 }
 
 void GameInterface::clearHp(int player) {
@@ -104,21 +141,21 @@ void GameInterface::clearHp(int player) {
     }
     toBeginCol();
     shiftRow(-r);
-    shiftCol(85);
+    shiftCol(DEFAULT_W);
 }
 
-void GameInterface::clearEnterWord(int player) {
+void GameInterface::clearInput(int player) {
     int r = player == 1 ? 18 : 8, c = 12;
     toBeginCol();
     shiftRow(r);
     shiftCol(c);
-    for (int i = c; i < 42; ++i){
-        tab[r][i].sym = " ";
-        tab[r][i].paint();
+    for (int i = 0; i < 30; ++i){
+        tab[r][c + i].sym = " ";
+        tab[r][c + i].paint();
     }
     toBeginCol();
     shiftRow(-r);
-    shiftCol(85);
+    shiftCol(DEFAULT_W);
 }
 
 void GameInterface::clearHints() {
@@ -135,7 +172,7 @@ void GameInterface::clearHints() {
         toBeginCol();
     }
     shiftRow(-19);
-    shiftCol(85);
+    shiftCol(DEFAULT_W);
 }
 
 void GameInterface::drawLetters(const vector<char>& letters, int player) {
@@ -172,7 +209,7 @@ void GameInterface::drawLetters(const vector<char>& letters, int player) {
     }
 
     shiftRow(-r);
-    shiftCol(85);
+    shiftCol(DEFAULT_W);
 }
 
 void GameInterface::drawHp(int hp, int player) {
@@ -189,10 +226,10 @@ void GameInterface::drawHp(int hp, int player) {
     }
     toBeginCol();
     shiftRow(-r);
-    shiftCol(85);
+    shiftCol(DEFAULT_W);
 }
 
-void GameInterface::drawHints(const vector<pair<string, wordStat> >& hintsAdd, const vector<pair<string, wordStat> >& hintsDel) {
+void GameInterface::drawHints(const pair<vectorHints, vectorHints>& hints) {
 	auto makeHint = [&](int r, int c, string word, wordStat s) -> void {
 		for (int j = 0; j < word.size(); ++j) {
 			tab[r][c + j + 1].sym = convert(word[j]);
@@ -208,7 +245,7 @@ void GameInterface::drawHints(const vector<pair<string, wordStat> >& hintsAdd, c
 	};
 
 	toBeginCol();
-	vector< vector<pair<string, wordStat> > > h = {hintsAdd, hintsDel};
+	vector<vectorHints> h = {hints.second, hints.first};
 	for (int i = 0; i < 2; ++i) {
 		if (h[i].size() > 19) {
 			h[i].resize(19);
@@ -229,5 +266,5 @@ void GameInterface::drawHints(const vector<pair<string, wordStat> >& hintsAdd, c
 		toBeginCol();
 	}
 
-	shiftCol(85);
+	shiftCol(DEFAULT_W);
 }

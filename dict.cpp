@@ -1,8 +1,8 @@
 #include "dict.hpp"
 
 wordStat::wordStat() {
-	add = 0;
-	del = 1;
+	add = BAD_STATE.add;
+	del = BAD_STATE.del;
 }
 
 wordStat::wordStat(int Add, int Del) {
@@ -10,8 +10,16 @@ wordStat::wordStat(int Add, int Del) {
 	del = Del;
 }
 
+bool wordStat::correct() const {
+	return *this != BAD_STATE;
+}
+
 bool wordStat::operator> (const wordStat& T) const {
 	return std::tie(del, add) > std::tie(T.del, T.add);
+}
+
+bool wordStat::operator!= (const wordStat& T) const {
+	return std::tie(del, add) != std::tie(T.del, T.add);
 }
 
 Dict::Dict() {
@@ -76,11 +84,25 @@ void Dict::del(const string& word) {
 }
 
 wordStat Dict::getWordStat(const string& word) const {
-	// todo: нужна формула
-	return wordStat();
+	if (!find(word)) {
+		return BAD_STATE;
+	}
+	if (word.size() == 0) {
+		return BAD_STATE;
+	}
+	for (char c : word) if (c < 'a' || c > 'z') {
+		return BAD_STATE;
+	}
+	int add = 0, del = word.size();
+	for (char c : word) {
+		if (c == 'a' || c == 'e' || c == 'o' || c == 'i' || c == 'u') {
+			add++;
+		}
+	}
+	return wordStat(add, del);
 }
 
-vector<pair<string, wordStat> > Dict::getHints(const vector<char>& let) const {
+pair<vectorHints, vectorHints> Dict::getHints(const vector<char>& let) const {
 	buffWord_.resize(0);
 	buffHints_.resize(0);
 	buffLet_ = let;
@@ -92,22 +114,25 @@ vector<pair<string, wordStat> > Dict::getHints(const vector<char>& let) const {
 	for (const string& w : buffHints_) if (find(w)) {
 		inDict.push_back(w);
 	}
-	std::sort(inDict.begin(), inDict.end(), [&](const string& a, const string& b) {
-		return getWordStat(a) > getWordStat(b);
-	});
-
-	if (inDict.size() > LIMIT_HINTS) {
-		inDict.resize(LIMIT_HINTS);
-	}
 
 	// чтобы итоговая память была строго O(min(LIM, |inDict|)) снаружи
-	vector<pair<string, wordStat> > res;
-	res.reserve(inDict.size()); 
-	for (const string& w : inDict) {
-		res.emplace_back(w, getWordStat(w));
+	vectorHints add, del;
+
+	std::sort(inDict.begin(), inDict.end(), [&](const string& a, const string& b) {
+		return getWordStat(a).add > getWordStat(b).add;
+	});
+	for (int i = 0; i < std::min((int)inDict.size(), LIMIT_HINTS); ++i) {
+		add.emplace_back(inDict[i], getWordStat(inDict[i]));
 	}
 
-	return res;
+	std::sort(inDict.begin(), inDict.end(), [&](const string& a, const string& b) {
+		return getWordStat(a).del > getWordStat(b).del;
+	});
+	for (int i = 0; i < std::min((int)inDict.size(), LIMIT_HINTS); ++i) {
+		del.emplace_back(inDict[i], getWordStat(inDict[i]));
+	}
+
+	return make_pair(add, del);
 }
 
 void Dict::generateSubwords() const {

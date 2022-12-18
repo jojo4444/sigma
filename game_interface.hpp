@@ -16,20 +16,19 @@ class GameInterface {
 public:
 	GameInterface(const Game& g);
 
- 	void paint(const Game& g) const;
-
- 	string getToken() const; 
+ 	void draw(const Game& g, int player);
+ 	void drawInput(const string& word, wordStat s, int player);
 
 private:
 	void initTab();
  	
 	void clearHp(int player);
-	void clearEnterWord(int player);
+	void clearInput(int player);
 	void clearHints();
 
 	void drawHp(int hp, int player);
   	void drawLetters(const vector<char>& lettters, int player);
-  	void drawHints(const vector<pair<string, wordStat> >& hintsAdd, const vector<pair<string, wordStat> >& hintsDel);
+  	void drawHints(const pair<vectorHints, vectorHints>& h);
 
 	cell tab[DEFAULT_H][DEFAULT_W];
 };
@@ -40,7 +39,7 @@ private:
 ширина 85
 высота 21
 
-20  +--- hp ---+------- enter word -----------+---- hint hp+ ------+---- hint hp- ------+
+20  +--- hp ---+------- enter word -----------+---- hint hp- ------+---- hint hp+ ------+
 19  |          |                              |                    |                    |
 18  |   100    |                              |                    |                    |
 17  |          |                              |                    |                    |
@@ -62,8 +61,9 @@ private:
 1   |                                         |                    |                    |
 0   +-----------------------------------------+--------------------+--------------------+|cursor = default|
     0          |11                            |42                  |63                 84|85
-                                               ..........  .   .
-                                                           +12 +16
+                ..........      .       .      ..........  .   .
+                                +16     +24                +12 +16
+
 default - (85, 0)
 
 shiftCol(-85);
@@ -78,11 +78,10 @@ shiftCol(85);
  - при запуске имеет позицию курсора = default
  - на выходе позиция курсора = default
 
-
-clear bars methods:
- - hp bar
- - enter word bar
- - hint
-
+задачи:
+ - формула для hp+-
+ - разделение hints по +- 
+ - hgeth --> enter word
+ - enter word --> научиться word stat + find dict + error message
 */
 
