@@ -134,4 +134,18 @@ void GameInterface::drawHpBar(int hp, int player){
     shiftToBeginCol();
     shiftRow(-rowNum);
     shiftCol(85);
+
+	write(20, 4, " hp ");
+	write(20, 19, " enter word ");
+	write(20, 47, " hint hp+ ");
+	write(20, 68, " hint hp- ");
+}
+
+void GameInterface::write(int r, int c, const string& msg) {
+	for (int i = 0; i < msg.size(); ++i) {
+		if (c + i >= DEFAULT_W) {
+			break;
+		}
+		tab[r][c + i].sym = string(1, msg[i]);
+	}
 }
