@@ -6,8 +6,7 @@ project(sigma)
 
 set(SOURCE_EXE main.cpp)
 
-add_library(interface STATIC game_interface.cpp)
-add_library(interface STATIC painter.cpp)
+add_library(interface STATIC game_interface.cpp painter.cpp)
 
 add_library(dict STATIC dict.cpp trie.cpp)
 

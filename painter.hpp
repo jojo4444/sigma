@@ -22,7 +22,7 @@ private:
 };
 
 struct cell {
-	char sym;
+	string sym;
 	Color fg, bg;
 
 	void paint() const;

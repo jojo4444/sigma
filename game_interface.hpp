@@ -1,35 +1,31 @@
 #ifndef GAME_INTERFACE_HEADER
 #define GAME_INTERFACE_HEADER
 
-#include "painter.hpp"
+#include <iostream>
+
 #include "game.hpp"
 
 #include <vector>
 
 using std::vector;
+#include "painter.hpp"
 
 const int DEFAULT_W = 85;
 const int DEFAULT_H = 21;
 
 class GameInterface {
 public:
-  GameInterface();
+	GameInterface(const Game& g);
 
   void paint(const Game& g) const;
 
   string getToken() const; 
 
 private:
-  initTab();
-  addLett(int step);
-  addhint+()
-  addhint-();
-  void drawHpBar(int hp, int player);
-  void drawLettersBar(const vector<char>& lettters, int player);
-  sethp(step);
-  set_enter_word();
-  cell cells[21][85];
-
+	void initTab();
+	void drawHpBar(int hp, int player);
+  	void drawLettersBar(const vector<char>& lettters, int player);
+	cell tab[DEFAULT_H][DEFAULT_W];
 };
 
 #endif
@@ -59,7 +55,7 @@ private:
 2   | +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+ |                    |                    |
 1   |                                         |                    |                    |
 0   +-----------------------------------------+--------------------+--------------------+|cursor = default|
-    012...                                                                             84|85
+    0          |11                            |42                  |63                 84|85
 
 default - (85, 0)
 
