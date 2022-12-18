@@ -20,7 +20,8 @@ public:
 
 	vector<pair<string, wordStat> > getHints() const;
 
-	bool go(const string& word, int step);
+	bool checkGo(const string& word, int player) const;
+	void go(const string& word, int player);
 	bool finish() const;
 
 private:

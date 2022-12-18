@@ -14,20 +14,29 @@ vector<pair<string, wordStat> > Game::getHints() const {
     return hints_;
 }
 
-bool Game::go(const std::string& word, int step) {
+bool Game::checkGo(const std::string& word, int player) const {
     if (!dict_->correct(word)) {
         return false;
     }
     if (!dict_->find(word)){
         return false;
     }
-    Player& current = alice_, opposite = bob_;
-    if (step == 2) {
-        std::swap(current, opposite);
-    }
-    if (!current.makeTurn(word)) {
+    if (player == 1 && !alice_.checkTurn(word)) {
         return false;
     }
+    if (player == 2 && !bob_.checkTurn(word)) {
+        return false;
+    }
+    return true;
+}
+
+void Game::go(const std::string& word, int player) {
+    Player& current = alice_, opposite = bob_;
+    if (player == 2) {
+        std::swap(current, opposite);
+    }
+    current.turn(word);
+
     wordStat stat = dict_->getWordStat(word);
     dict_->del(word);
 
@@ -36,8 +45,6 @@ bool Game::go(const std::string& word, int step) {
     current.addNewLetters(generateLetters(word.size()));
 
     hints_ = dict_->getHints(opposite.getLets());
-
-    return true;
 }
 
 bool Game::finish() const {
