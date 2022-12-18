@@ -126,8 +126,8 @@ void GameInterface::initTab() {
 
 	write(20, 4, " hp ");
 	write(20, 19, " enter word ");
-	write(20, 47, " hint hp+ ");
-	write(20, 68, " hint hp- ");
+	write(20, 47, " hint hp- ");
+	write(20, 68, " hint hp+ ");
 }
 
 void GameInterface::clearHp(int player) {
@@ -245,7 +245,7 @@ void GameInterface::drawHints(const pair<vectorHints, vectorHints>& hints) {
 	};
 
 	toBeginCol();
-	vector<vectorHints> h = {hints.first, hints.second};
+	vector<vectorHints> h = {hints.second, hints.first};
 	for (int i = 0; i < 2; ++i) {
 		if (h[i].size() > 19) {
 			h[i].resize(19);

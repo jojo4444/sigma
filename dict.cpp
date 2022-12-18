@@ -1,8 +1,8 @@
 #include "dict.hpp"
 
 wordStat::wordStat() {
-	add = 0;
-	del = 1;
+	add = BAD_STATE.add;
+	del = BAD_STATE.del;
 }
 
 wordStat::wordStat(int Add, int Del) {
@@ -84,8 +84,22 @@ void Dict::del(const string& word) {
 }
 
 wordStat Dict::getWordStat(const string& word) const {
-	// todo: нужна формула
-	return wordStat();
+	if (!find(word)) {
+		return BAD_STATE;
+	}
+	if (word.size() == 0) {
+		return BAD_STATE;
+	}
+	for (char c : word) if (c < 'a' || c > 'z') {
+		return BAD_STATE;
+	}
+	int add = 0, del = word.size();
+	for (char c : word) {
+		if (c == 'a' || c == 'e' || c == 'o' || c == 'i' || c == 'u') {
+			add++;
+		}
+	}
+	return wordStat(add, del);
 }
 
 pair<vectorHints, vectorHints> Dict::getHints(const vector<char>& let) const {
