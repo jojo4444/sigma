@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <sstream>
+#include <limits>
 
 using std::string;
 

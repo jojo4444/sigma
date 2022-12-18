@@ -74,7 +74,7 @@ void GameInterface::initTab() {
 }
 
 void GameInterface::drawLettersBar(const vector<char>& letters, int player) {
-    int rowNum = player == 1? 13 : 3;
+    int rowNum = player == 1 ? 13 : 3;
     shiftCol(-85);
     shiftRow(rowNum - 1);
     for (int i = 3, j = 0; j < letters.size(); j++, i += 4) {
@@ -124,7 +124,7 @@ void GameInterface::drawLettersBar(const vector<char>& letters, int player) {
 
 void GameInterface::drawHpBar(int hp, int player) {
     auto str = std::to_string(hp);
-    int rowNum = player == 1? 18 : 10;
+    int rowNum = player == 1 ? 18 : 10;
     shiftCol(-85);
     shiftRow(rowNum);
     const int mcol = 6;
