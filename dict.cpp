@@ -10,8 +10,16 @@ wordStat::wordStat(int Add, int Del) {
 	del = Del;
 }
 
+bool wordStat::correct() const {
+	return *this != BAD_STATE;
+}
+
 bool wordStat::operator> (const wordStat& T) const {
 	return std::tie(del, add) > std::tie(T.del, T.add);
+}
+
+bool wordStat::operator!= (const wordStat& T) const {
+	return std::tie(del, add) != std::tie(T.del, T.add);
 }
 
 Dict::Dict() {

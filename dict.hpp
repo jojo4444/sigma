@@ -22,14 +22,20 @@ const int MIN_LEN_WORD = 5;
 1. add >= 0
 2. del >= 0
 */
+
 struct wordStat {
 	int add, del;
 
 	wordStat();
 	wordStat(int Add, int Del);
 
+	bool correct() const;
+
 	bool operator> (const wordStat& T) const;
+	bool operator!= (const wordStat& T) const;
 };
+
+const wordStat BAD_STATE = (wordStat){-1, -1};
 
 class Dict {
 public:
