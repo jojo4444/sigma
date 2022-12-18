@@ -1,74 +1,5 @@
 #include "game_interface.hpp"
 
-void GameInterface::drawLettersBar(const vector<char>& letters, int player){
-    int rowNum = player == 1? 13 : 3;
-    shiftCol(-85);
-    shiftRow(rowNum - 1);
-    for (int i = 3, j = 0; j < letters.size(); j++, i += 4){
-        shiftCol(i - 1);
-        tabs[rowNum - 1][i - 1].sym = '╔';
-        tabs[rowNum - 1][i - 1].paint();
-        shiftCol(i);
-        tabs[rowNum - 1][i].sym = '═';
-        tabs[rowNum - 1][i].paint()
-        shiftCol(i + 1);
-        tabs[rowNum - 1][i + 1].sym = '╗';
-        tabs[rowNum - 1][i + 1].paint()
-    }
-    shiftToBeginCol();
-    shiftRow(rowNum + 1);
-    for (int i = 3, j = 0; j < letters.size(); j++, i += 4){
-        shiftCol(i - 1);
-        tabs[rowNum + 1][i - 1].sym = '╚';
-        tabs[rowNum + 1][i - 1].paint()
-        shiftCol(i);
-        tabs[rowNum + 1][i].sym = '═';
-        tabs[rowNum + 1][i].paint()
-        shiftCol(i + 1);
-        tabs[rowNum + 1][i + 1].sym = '╝';
-        tabs[rowNum + 1][i + 1].paint()
-    }
-    shiftToBeginCol();
-    shiftRow(rowNum);
-    for (int i = 3, j = 0; j < letters.size(); j++, i += 4){
-        
-        shiftCol(i - 1);
-        tabs[rowNum][i - 1].sym = '║';
-        tabs[rowNum][i - 1].paint();
-
-        shiftCol(i);
-        tabs[rowNum][i].sym = letters[j];
-        tabs[rowNum][i].paint();
-
-        shiftCol(i + 1);
-        tabs[rowNum][i - 1].sym = '║';
-        tabs[rowNum][i - 1].paint();
-    }
-    shiftToBeginCol();
-    shiftRow(-rowNum);
-    shiftCol(85);
-}
-
-void GameInterface::drawHpBar(int hp, int player){
-    auto str = std::to_string(hp);
-    int rowNum = player == 1? 18 : 10
-    shiftCol(-85);
-    shiftRow(rowNum);
-    const int mcol = 6;
-    for (int i = (str.size() >> 1), j = mcol; i >= 0; --i, --j){
-        tabs[rowNum][j].sym = str[i];
-        tabs[rowNum][j].paint();
-    }
-    for (int i = (str.size() >> 1) + 1, j = mcol + 1; i < str.size(); ++i, ++j){
-        tabs[rowNum][j].sym = str[i];
-        tabs[rowNum][j].paint();
-    }
-    shiftToBeginCol();
-    shiftRow(-rowNum);
-    shiftCol(85);
-}
-#include "game_interface.hpp"
-
 GameInterface::GameInterface(const Game& g) {
 	for (int i = 0; i < DEFAULT_H; ++i) {
 		std::cout << string(DEFAULT_W, ' ');
@@ -135,4 +66,72 @@ void GameInterface::initTab() {
 	}
 	tab[6][11].sym = tab[16][11].sym = "┴";
 	tab[10][11].sym = tab[20][11].sym = "┬";
+}
+
+void GameInterface::drawLettersBar(const vector<char>& letters, int player){
+    int rowNum = player == 1? 13 : 3;
+    shiftCol(-85);
+    shiftRow(rowNum - 1);
+    for (int i = 3, j = 0; j < letters.size(); j++, i += 4){
+        shiftCol(i - 1);
+        tabs[rowNum - 1][i - 1].sym = '╔';
+        tabs[rowNum - 1][i - 1].paint();
+        shiftCol(i);
+        tabs[rowNum - 1][i].sym = '═';
+        tabs[rowNum - 1][i].paint()
+        shiftCol(i + 1);
+        tabs[rowNum - 1][i + 1].sym = '╗';
+        tabs[rowNum - 1][i + 1].paint()
+    }
+    shiftToBeginCol();
+    shiftRow(rowNum + 1);
+    for (int i = 3, j = 0; j < letters.size(); j++, i += 4){
+        shiftCol(i - 1);
+        tabs[rowNum + 1][i - 1].sym = '╚';
+        tabs[rowNum + 1][i - 1].paint()
+        shiftCol(i);
+        tabs[rowNum + 1][i].sym = '═';
+        tabs[rowNum + 1][i].paint()
+        shiftCol(i + 1);
+        tabs[rowNum + 1][i + 1].sym = '╝';
+        tabs[rowNum + 1][i + 1].paint()
+    }
+    shiftToBeginCol();
+    shiftRow(rowNum);
+    for (int i = 3, j = 0; j < letters.size(); j++, i += 4){
+        
+        shiftCol(i - 1);
+        tabs[rowNum][i - 1].sym = '║';
+        tabs[rowNum][i - 1].paint();
+
+        shiftCol(i);
+        tabs[rowNum][i].sym = letters[j];
+        tabs[rowNum][i].paint();
+
+        shiftCol(i + 1);
+        tabs[rowNum][i - 1].sym = '║';
+        tabs[rowNum][i - 1].paint();
+    }
+    shiftToBeginCol();
+    shiftRow(-rowNum);
+    shiftCol(85);
+}
+
+void GameInterface::drawHpBar(int hp, int player){
+    auto str = std::to_string(hp);
+    int rowNum = player == 1? 18 : 10
+    shiftCol(-85);
+    shiftRow(rowNum);
+    const int mcol = 6;
+    for (int i = (str.size() >> 1), j = mcol; i >= 0; --i, --j){
+        tabs[rowNum][j].sym = str[i];
+        tabs[rowNum][j].paint();
+    }
+    for (int i = (str.size() >> 1) + 1, j = mcol + 1; i < str.size(); ++i, ++j){
+        tabs[rowNum][j].sym = str[i];
+        tabs[rowNum][j].paint();
+    }
+    shiftToBeginCol();
+    shiftRow(-rowNum);
+    shiftCol(85);
 }
