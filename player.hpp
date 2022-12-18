@@ -13,21 +13,19 @@ class Player {
 public:
 	Player(int hp);
 
-	bool makeTurn(const string& word);
+	void turn(const string& word);
+	bool checkTurn(const string& word) const;
+
 	void addNewLetters(const vector<char>& nlet);
 
 	int getHp() const;
 	void updHp(int dh);
 
 	vector<char> getLets() const;
-	void addLetter(char c);
 
 private:
 	int hp_;
 	vector<char> let_;
-
-	void erraseLetters(const string& word);
-	bool checkWordLetters(const string& word) const;
 };
 
 #endif
