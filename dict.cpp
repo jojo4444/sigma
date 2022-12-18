@@ -57,10 +57,8 @@ Dict::Dict() {
 }
 
 bool Dict::correct(const string& word) const {
-	for (char c : word) {
-		if (c < 'a' || c > 'z') {
-			return false;
-		}
+	for (char c : word) if (c < 'a' || c > 'z') {
+		return false;
 	}
 	return true;
 }
