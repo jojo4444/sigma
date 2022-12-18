@@ -1,30 +1,26 @@
 #ifndef GAME_INTERFACE_HEADER
 #define GAME_INTERFACE_HEADER
 
+#include <iostream>
+
 #include "game.hpp"
+#include "painter.hpp"
 
 const int DEFAULT_W = 85;
 const int DEFAULT_H = 21;
 
 class GameInterface {
 public:
-	GameInterface();
+	GameInterface(const Game& g);
 
 	void paint(const Game& g) const;
 
 	string getToken() const; 
 
 private:
-	shiftRow();
-	shiftCol();
-	initTab();
-	addLett(int step);
-	addhint+()
-	addhint-();
-	sethp(step);
-	set_enter_word();
-	cell : {char, foreground, background}
-	cell tab[21][85];
+	void initTab();
+
+	cell tab[DEFAULT_H][DEFAULT_W];
 };
 
 #endif
@@ -54,7 +50,7 @@ private:
 2   | +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+ +-+ |                    |                    |
 1   |                                         |                    |                    |
 0   +-----------------------------------------+--------------------+--------------------+|cursor = default|
-    012...                                                                             84|85
+    0          |11                            |42                  |63                 84|85
 
 default - (85, 0)
 

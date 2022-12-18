@@ -1,13 +1,15 @@
 #include "dict.hpp"
 #include "game.hpp"
 #include "painter.hpp"
+#include "game_interface.hpp"
 
 int main() {
 	Dict d;
 	
 	for (int i = 0; i < 80; ++i) {
 		std::cout << d.getLet();
-
+	}
+	
 	cell c;
 	for (int i = 0; i < 100; ++i) {
 		c.sym = d.getLet();
@@ -28,6 +30,8 @@ int main() {
 	std::cout << "\n";
 
 	Game g(&d);
+
+	GameInterface cli(g);
 	
 	return 0;
 }
