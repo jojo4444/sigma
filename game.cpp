@@ -10,8 +10,12 @@ Game::Game(Dict *dict): alice_(DEFAULT_PLAYER_HP), bob_(DEFAULT_PLAYER_HP), dict
     hints_ = dict_->getHints(alice_.getLets());
 }
 
-vector<pair<string, wordStat> > Game::getHints() const {
+pair<vectorHints, vectorHints> Game::getHints() const {
     return hints_;
+}
+
+Player Game::getPlayer(int player) const {
+    return player == 1 ? alice_ : bob_;
 }
 
 bool Game::checkGo(const std::string& word, int player) const {
@@ -31,20 +35,21 @@ bool Game::checkGo(const std::string& word, int player) const {
 }
 
 void Game::go(const std::string& word, int player) {
-    Player& current = alice_, opposite = bob_;
+    Player* current = &alice_;
+    Player* opposite = &bob_;
     if (player == 2) {
         std::swap(current, opposite);
     }
-    current.turn(word);
+    current->turn(word);
 
     wordStat stat = dict_->getWordStat(word);
     dict_->del(word);
 
-    opposite.updHp(-stat.del);
-    current.updHp(stat.add);
-    current.addNewLetters(generateLetters(word.size()));
+    opposite->updHp(-stat.del);
+    current->updHp(stat.add);
+    current->addNewLetters(generateLetters(word.size()));
 
-    hints_ = dict_->getHints(opposite.getLets());
+    hints_ = dict_->getHints(opposite->getLets());
 }
 
 bool Game::finish() const {

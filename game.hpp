@@ -18,7 +18,8 @@ class Game {
 public:
 	Game(Dict* dict);
 
-	vector<pair<string, wordStat> > getHints() const;
+	pair<vectorHints, vectorHints> getHints() const;
+	Player getPlayer(int player) const;
 
 	bool checkGo(const string& word, int player) const;
 	void go(const string& word, int player);
@@ -27,7 +28,7 @@ public:
 private:
 	Dict* dict_;
 	Player alice_, bob_;
-	vector<pair<string, wordStat> > hints_;
+	pair<vectorHints, vectorHints> hints_;
 
 	vector<char> generateLetters(int cnt);
 };

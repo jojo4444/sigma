@@ -8,13 +8,28 @@ GameInterface::GameInterface(const Game& g) {
 		} 
 	}
 	initTab();
-	draw(g);
+	draw(g, 1);
 }
 
-void GameInterface::draw(const Game& g) const {
-	/*
-		draw all!!!
-	*/
+void GameInterface::draw(const Game& g, int player) {
+	// todo: player for bg color
+
+	for (int p = 1; p <= 2; ++p) {
+		clearInput(p);
+		clearHp(p);
+	} 
+	clearHints();
+	
+	Player alice = g.getPlayer(1);
+	Player bob = g.getPlayer(2);
+
+	drawHp(alice.getHp(), 1);
+	drawHp(bob.getHp(), 2);
+	drawLetters(alice.getLets(), 1);
+	drawLetters(bob.getLets(), 2);
+
+	drawHints(g.getHints());
+
 	toBeginCol();
 	shiftRow(DEFAULT_H - 1);
 	for (int i = DEFAULT_H - 1; i >= 0; --i) {
@@ -134,9 +149,9 @@ void GameInterface::clearInput(int player) {
     toBeginCol();
     shiftRow(r);
     shiftCol(c);
-    for (int i = c; i < 42; ++i){
-        tab[r][i].sym = " ";
-        tab[r][i].paint();
+    for (int i = 0; i < 30; ++i){
+        tab[r][c + i].sym = " ";
+        tab[r][c + i].paint();
     }
     toBeginCol();
     shiftRow(-r);
@@ -214,7 +229,7 @@ void GameInterface::drawHp(int hp, int player) {
     shiftCol(DEFAULT_W);
 }
 
-void GameInterface::drawHints(const vector<pair<string, wordStat> >& hintsAdd, const vector<pair<string, wordStat> >& hintsDel) {
+void GameInterface::drawHints(const pair<vectorHints, vectorHints>& hints) {
 	auto makeHint = [&](int r, int c, string word, wordStat s) -> void {
 		for (int j = 0; j < word.size(); ++j) {
 			tab[r][c + j + 1].sym = convert(word[j]);
@@ -230,7 +245,7 @@ void GameInterface::drawHints(const vector<pair<string, wordStat> >& hintsAdd, c
 	};
 
 	toBeginCol();
-	vector< vector<pair<string, wordStat> > > h = {hintsAdd, hintsDel};
+	vector<vectorHints> h = {hints.first, hints.second};
 	for (int i = 0; i < 2; ++i) {
 		if (h[i].size() > 19) {
 			h[i].resize(19);

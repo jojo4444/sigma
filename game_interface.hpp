@@ -16,7 +16,7 @@ class GameInterface {
 public:
 	GameInterface(const Game& g);
 
- 	void draw(const Game& g) const;
+ 	void draw(const Game& g, int player);
  	void drawInput(const string& word, wordStat s, int player);
 
 private:
@@ -28,7 +28,7 @@ private:
 
 	void drawHp(int hp, int player);
   	void drawLetters(const vector<char>& lettters, int player);
-  	void drawHints(const vector<pair<string, wordStat> >& hintsAdd, const vector<pair<string, wordStat> >& hintsDel);
+  	void drawHints(const pair<vectorHints, vectorHints>& h);
 
 	cell tab[DEFAULT_H][DEFAULT_W];
 };
