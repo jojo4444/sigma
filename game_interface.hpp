@@ -22,8 +22,6 @@ public:
 
 private:
 	void initTab();
-	void write(int r, int c, const string& msg);
-
 	void drawHpBar(int hp, int player);
   	void drawLettersBar(const vector<char>& lettters, int player);
 
@@ -74,9 +72,10 @@ shiftCol(85);
  - на выходе позиция курсора = default
 
 
-а) каркас, cell, shift/row/col/cursor/color
-б) paint, используя shift/color... [hp, lets]
-
+clear bars methods:
+ - hp bar
+ - enter word bar
+ - hint
 
 */
 

@@ -9,7 +9,7 @@ int main() {
 	for (int i = 0; i < 80; ++i) {
 		std::cout << d.getLet();
 	}
-	
+
 	cell c;
 	for (int i = 0; i < 100; ++i) {
 		c.sym = d.getLet();
@@ -32,6 +32,13 @@ int main() {
 	Game g(&d);
 
 	GameInterface cli(g);
-	
+
+	/*
+	cli.drawHpBar(100, 1);
+	cli.drawHpBar(99, 2);
+	cli.drawLettersBar(let, 1);
+	cli.drawLettersBar(let, 2);
+	*/
+
 	return 0;
 }
