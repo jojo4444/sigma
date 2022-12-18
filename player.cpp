@@ -7,7 +7,16 @@ int Player::getHp() const {
 }
 
 vector<char> Player::getLets() const {
-    return let_;
+    vector<char> res = let_;
+    std::sort(res.begin(), res.end(), [](char a, char b) {
+        bool a_glas = (a == 'a' || a == 'e' || a == 'u' || a == 'o' || a == 'i');
+        bool b_glas = (b == 'a' || b == 'e' || b == 'u' || b == 'o' || b == 'i');
+        if (a_glas != b_glas) {
+            return a_glas > b_glas;
+        }
+        return a < b;
+    });
+    return res;
 }
 
 void Player::updHp(int dh) {
