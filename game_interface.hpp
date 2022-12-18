@@ -2,13 +2,12 @@
 #define GAME_INTERFACE_HEADER
 
 #include <iostream>
-
-#include "game.hpp"
-
 #include <vector>
 
-using std::vector;
+#include "game.hpp"
 #include "painter.hpp"
+
+using std::vector;
 
 const int DEFAULT_W = 85;
 const int DEFAULT_H = 21;
@@ -17,14 +16,14 @@ class GameInterface {
 public:
 	GameInterface(const Game& g);
 
-  void paint(const Game& g) const;
+ 	void paint(const Game& g) const;
 
-  string getToken() const; 
+ 	string getToken() const; 
 
 private:
 	void initTab();
 	void write(int r, int c, const string& msg);
-	
+
 	void drawHpBar(int hp, int player);
   	void drawLettersBar(const vector<char>& lettters, int player);
 
