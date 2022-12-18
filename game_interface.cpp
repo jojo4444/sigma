@@ -88,7 +88,7 @@ void GameInterface::drawLettersBar(const vector<char>& letters, int player) {
     shiftRow(r);
 
     for (int i = 0; i < letters.size(); ++i) {
-    	int c = 2 + i*4;
+    	int c = 4 + i*4;
     	shiftCol(c);
 
     	tab[r][c].sym = "╚";
