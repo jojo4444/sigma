@@ -4,11 +4,11 @@ wordStat::wordStat() {
 	add = 0;
 	del = 1;
 }
+
 wordStat::wordStat(int Add, int Del) {
 	add = Add;
 	del = Del;
 }
-
 
 bool wordStat::operator> (const wordStat& T) const {
 	return std::tie(del, add) > std::tie(T.del, T.add);
@@ -21,7 +21,6 @@ Dict::Dict() {
 
 	string word;
 	vector<string> words;
-
 
 	while (file >> word) {
 		if (word.size() < MIN_LEN_WORD) {
@@ -55,6 +54,13 @@ Dict::Dict() {
 	std::random_device rd;
 	gen_.seed(rd());
 	dist_ = std::discrete_distribution<int>(cnt.begin(), cnt.end());
+}
+
+bool Dict::correct(const string& word) const {
+	for (char c : word) if (c < 'a' || c > 'z') {
+		return false;
+	}
+	return true;
 }
 
 char Dict::getLet() const {

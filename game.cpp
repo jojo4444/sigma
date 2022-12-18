@@ -15,6 +15,9 @@ vector<pair<string, wordStat> > Game::getHints() const {
 }
 
 bool Game::go(const std::string& word, int step) {
+    if (!dict_->correct(word)) {
+        return false;
+    }
     if (!dict_->find(word)){
         return false;
     }
@@ -43,7 +46,7 @@ bool Game::finish() const {
 
 vector<char> Game::generateLetters(int cnt) {
     vector<char> res(cnt);
-    for(int i = 0; i < cnt; ++i){
+    for(int i = 0; i < cnt; ++i) {
         res[i] = dict_->getLet();
     }
     return res;
