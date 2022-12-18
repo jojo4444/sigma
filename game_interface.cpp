@@ -94,7 +94,6 @@ void GameInterface::clearHpBar(int player) {
     toBeginCol();
     shiftRow(-r);
     shiftCol(85);
-
 }
 
 void GameInterface::clearEnterWordBar(int player) {
@@ -113,10 +112,10 @@ void GameInterface::clearEnterWordBar(int player) {
 
 void GameInterface::clearHints() {
     toBeginCol();
-    for (int r = 1; r < 20; ++r){
+    for (int r = 1; r < 20; ++r) {
         shiftRow(1);
         shiftCol(43);
-        for (int c = 43; c < 84; c++) if (c != 63){
+        for (int c = 43; c < 84; c++) if (c != 63) {
             tab[r][c].sym = " ";
             tab[r][c].paint();
         } else {
@@ -124,7 +123,7 @@ void GameInterface::clearHints() {
         }
         toBeginCol();
     }
-    shiftRow(-20);
+    shiftRow(-19);
     shiftCol(85);
 }
 

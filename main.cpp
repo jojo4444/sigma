@@ -33,17 +33,5 @@ int main() {
 
 	GameInterface cli(g);
 
-	/*cli.drawHpBar(100, 1);
-	cli.drawHpBar(99, 2);
-	cli.drawLettersBar(let, 1);
-	cli.drawLettersBar(let, 2);
-
-	cli.clearHpBar(1);
-	cli.clearHpBar(2);
-	cli.clearHints();
-	cli.clearEnterWordBar(1);
-	cli.clearEnterWordBar(2);*/
-	
-
 	return 0;
 }
