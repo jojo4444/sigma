@@ -4,6 +4,8 @@
 #include <iostream>
 #include <sstream>
 #include <limits>
+#include <termios.h>
+#include <unistd.h>
 
 using std::string;
 
@@ -34,5 +36,7 @@ void shiftCol(int c);
 void toBeginCol();
 
 string convert(char c);
+
+int hgetch();
 
 #endif

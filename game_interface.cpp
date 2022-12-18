@@ -25,6 +25,17 @@ void GameInterface::paint(const Game& g) const {
 	std::cout << std::flush;
 }
 
+string GameInterface::getToken() const {
+	string res;
+	while (true) {
+		char c = hgetch();
+		if (c == '\n') {
+			return res;
+		}
+		res.push_back(c);
+	}
+}
+
 void GameInterface::initTab() {
 	int n = DEFAULT_H;
 	int m = DEFAULT_W;
