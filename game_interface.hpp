@@ -22,6 +22,9 @@ public:
 
 private:
 	void initTab();
+	void clearHpBar(int player);
+	void clearEnterWordBar(int player);
+	void clearHints();
 	void drawHpBar(int hp, int player);
   	void drawLettersBar(const vector<char>& lettters, int player);
 

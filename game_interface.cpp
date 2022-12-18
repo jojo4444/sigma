@@ -82,6 +82,52 @@ void GameInterface::initTab() {
 	write(20, 68, " hint hp- ");
 }
 
+void GameInterface::clearHpBar(int player) {
+    int r = player == 1 ? 18 : 8, c = 1;
+    toBeginCol();
+    shiftRow(r);
+    shiftCol(c);
+    for (int i = c; i < 11; ++i){
+        tab[r][i].sym = " ";
+        tab[r][i].paint();
+    }
+    toBeginCol();
+    shiftRow(-r);
+    shiftCol(85);
+
+}
+
+void GameInterface::clearEnterWordBar(int player) {
+    int r = player == 1 ? 18 : 8, c = 12;
+    toBeginCol();
+    shiftRow(r);
+    shiftCol(c);
+    for (int i = c; i < 42; ++i){
+        tab[r][i].sym = " ";
+        tab[r][i].paint();
+    }
+    toBeginCol();
+    shiftRow(-r);
+    shiftCol(85);
+}
+
+void GameInterface::clearHints() {
+    toBeginCol();
+    for (int r = 1; r < 20; ++r){
+        shiftRow(1);
+        shiftCol(43);
+        for (int c = 43; c < 84; c++) if (c != 63){
+            tab[r][c].sym = " ";
+            tab[r][c].paint();
+        } else {
+            shiftCol(1);
+        }
+        toBeginCol();
+    }
+    shiftRow(-20);
+    shiftCol(85);
+}
+
 void GameInterface::drawLettersBar(const vector<char>& letters, int player) {
     int r = player == 1 ? 12 : 2;
     toBeginCol();
