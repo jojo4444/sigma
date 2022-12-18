@@ -12,13 +12,13 @@ GameInterface::GameInterface(const Game& g) {
 }
 
 void GameInterface::draw(const Game& g, int player) {
-	// todo: player for bg color
-
 	for (int p = 1; p <= 2; ++p) {
 		clearInput(p);
 		clearHp(p);
 	} 
 	clearHints();
+
+	setActive(player);
 	
 	Player alice = g.getPlayer(1);
 	Player bob = g.getPlayer(2);
@@ -56,9 +56,11 @@ void GameInterface::drawInput(const string& word, wordStat s, int player) {
 		string del = std::to_string(s.del);
 		for (int j = 0; j < add.size(); ++j) {
 			tab[r][c + 16 + j].sym = convert(add[j]);
+			tab[r][c + 16 + j].fg = HP_ADD_COLOR;
 		}
 		for (int j = 0; j < del.size(); ++j) {
 			tab[r][c + 24 + j].sym = convert(del[j]);
+			tab[r][c + 24 + j].fg = HP_DEL_COLOR;
 		}
 	} 
 
@@ -80,6 +82,8 @@ void GameInterface::initTab() {
 	for (int i = 0; i < n; ++i) {
 		for (int j = 0; j < m; ++j) {
 			tab[i][j].sym = " "; 
+			tab[i][j].bg = BG_COLOR;
+			tab[i][j].fg = FG_COLOR;
 		}
 	}
 
@@ -180,21 +184,23 @@ void GameInterface::drawLetters(const vector<char>& letters, int player) {
     toBeginCol();
     shiftRow(r);
 
+    string board[3][3] = {
+    	{"└", "─", "┘"},
+    	{"│", " ", "│"},
+    	{"┌", "─", "┐"},
+    };
+
     for (int i = 0; i < letters.size(); ++i) {
     	int c = 4 + i*4;
     	shiftCol(c);
 
-    	tab[r][c].sym = "╚";
-    	tab[r][c + 1].sym = "═";
-    	tab[r][c + 2].sym = "╝";
-
-    	tab[r + 1][c].sym = "║";
+    	for (int dr = 0; dr < 3; ++dr) {
+    		for (int dc = 0; dc < 3; ++dc) {
+    			tab[r + dr][c + dc].sym = board[dr][dc];
+    			tab[r + dr][c + dc].fg = CARD_COLOR;
+    		}
+    	}
     	tab[r + 1][c + 1].sym = convert(letters[i]);
-    	tab[r + 1][c + 2].sym = "║";
-
-    	tab[r + 2][c].sym = "╔";
-    	tab[r + 2][c + 1].sym = "═";
-    	tab[r + 2][c + 2].sym = "╗";
 
     	for (int j = 0; j < 3; ++j) {
 	    	tab[r + j][c].paint();
@@ -238,9 +244,11 @@ void GameInterface::drawHints(const pair<vectorHints, vectorHints>& hints) {
 		string del = std::to_string(s.del);
 		for (int j = 0; j < add.size(); ++j) {
 			tab[r][c + 12].sym = convert(add[j]);
+			tab[r][c + 12].fg = HP_ADD_COLOR;
 		}
 		for (int j = 0; j < del.size(); ++j) {
 			tab[r][c + 16].sym = convert(del[j]);
+			tab[r][c + 16].fg = HP_DEL_COLOR;
 		}
 	};
 
@@ -267,4 +275,25 @@ void GameInterface::drawHints(const pair<vectorHints, vectorHints>& hints) {
 	}
 
 	shiftCol(DEFAULT_W);
+}
+
+void GameInterface::setActive(int player) {
+	for (int i = 0; i < DEFAULT_H; ++i) {
+		for (int j = 0; j < DEFAULT_W; ++j) {
+			tab[i][j].bg = BG_COLOR;
+			tab[i][j].fg = FG_COLOR;
+		}
+	}
+
+	int dw = 10;
+	int dh = 3;
+	int r = player == 1 ? 17 : 7;
+	int c = 1;
+
+	for (int i = 0; i < dh; ++i) {
+		for (int j = 0; j < dw; ++j) {
+			tab[r + i][c + j].bg = BG_COLOR_ACTIVE;
+			tab[r + i][c + j].fg = FG_COLOR_ACTIVE;
+		}
+	}
 }

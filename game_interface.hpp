@@ -9,6 +9,17 @@
 
 using std::vector;
 
+const Color BG_COLOR = Color(43, 174, 102);
+const Color FG_COLOR = Color(252, 246, 245);
+
+const Color BG_COLOR_ACTIVE = FG_COLOR;
+const Color FG_COLOR_ACTIVE = BG_COLOR;
+
+const Color CARD_COLOR = Color(45, 41, 38);
+
+const Color HP_ADD_COLOR = Color(51, 61, 121);
+const Color HP_DEL_COLOR = Color(44, 95, 45);
+
 const int DEFAULT_W = 85;
 const int DEFAULT_H = 21;
 
@@ -29,6 +40,8 @@ private:
 	void drawHp(int hp, int player);
   	void drawLetters(const vector<char>& lettters, int player);
   	void drawHints(const pair<vectorHints, vectorHints>& h);
+
+  	void setActive(int player);
 
 	cell tab[DEFAULT_H][DEFAULT_W];
 };
