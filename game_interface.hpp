@@ -1,30 +1,35 @@
 #ifndef GAME_INTERFACE_HEADER
 #define GAME_INTERFACE_HEADER
 
+#include "painter.hpp"
 #include "game.hpp"
+
+#include <vector>
+
+using std::vector;
 
 const int DEFAULT_W = 85;
 const int DEFAULT_H = 21;
 
 class GameInterface {
 public:
-	GameInterface();
+  GameInterface();
 
-	void paint(const Game& g) const;
+  void paint(const Game& g) const;
 
-	string getToken() const; 
+  string getToken() const; 
 
 private:
-	shiftRow();
-	shiftCol();
-	initTab();
-	addLett(int step);
-	addhint+()
-	addhint-();
-	sethp(step);
-	set_enter_word();
-	cell : {char, foreground, background}
-	cell tab[21][85];
+  initTab();
+  addLett(int step);
+  addhint+()
+  addhint-();
+  void drawHpBar(int hp, int player);
+  void drawLettersBar(const vector<char>& lettters, int player);
+  sethp(step);
+  set_enter_word();
+  cell cells[21][85];
+
 };
 
 #endif
@@ -73,4 +78,7 @@ shiftCol(85);
 
 а) каркас, cell, shift/row/col/cursor/color
 б) paint, используя shift/color... [hp, lets]
+
+
 */
+
