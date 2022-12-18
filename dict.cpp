@@ -108,12 +108,12 @@ pair<vectorHints, vectorHints> Dict::getHints(const vector<char>& let) const {
 	buffLet_ = let;
 	generateSubwords();
 
-	makeunique(buffHints_);
-
 	vector<string> inDict;
 	for (const string& w : buffHints_) if (find(w)) {
 		inDict.push_back(w);
 	}
+
+	makeunique(inDict);
 
 	// чтобы итоговая память была строго O(min(LIM, |inDict|)) снаружи
 	vectorHints add, del;
