@@ -35,6 +35,9 @@ class Dict {
 public:
 	Dict();
 
+	// word --> [a..z]
+	bool correct(const string& word) const;
+
 	char getLet() const;
 	bool find(const string& word) const;
 	void del(const string& word);
