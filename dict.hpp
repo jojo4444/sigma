@@ -14,7 +14,7 @@
 using std::vector;
 using std::pair;
 
-const int LIMIT_HINTS = 44;
+const int LIMIT_HINTS = 19;
 const int MIN_LEN_WORD = 5;
 
 /*
@@ -22,7 +22,6 @@ const int MIN_LEN_WORD = 5;
 1. add >= 0
 2. del >= 0
 */
-
 struct wordStat {
 	int add, del;
 
@@ -37,6 +36,8 @@ struct wordStat {
 
 const wordStat BAD_STATE = (wordStat){-1, -1};
 
+using vectorHints = vector<pair<string, wordStat> >;
+
 class Dict {
 public:
 	Dict();
@@ -49,7 +50,7 @@ public:
 	void del(const string& word);
 
 	wordStat getWordStat(const string& word) const;
-	vector<pair<string, wordStat> > getHints(const vector<char>& let) const;
+	pair<vectorHints, vectorHints> getHints(const vector<char>& let) const;
 
 private:
 	mutable string buffWord_;
