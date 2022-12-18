@@ -55,3 +55,7 @@ void shiftCol(int c) {
 void toBeginCol() {
     std::cout << "\033[" << std::numeric_limits<short>::max() << "D" << std::flush;
 }
+
+string convert(char c) {
+	return string(1, c);
+}

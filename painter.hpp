@@ -33,4 +33,6 @@ void shiftRow(int r);
 void shiftCol(int c);
 void toBeginCol();
 
+string convert(char c);
+
 #endif

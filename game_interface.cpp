@@ -72,7 +72,7 @@ void GameInterface::initTab() {
 			if (c + i >= DEFAULT_W) {
 				break;
 			}
-			tab[r][c + i].sym = string(1, msg[i]);
+			tab[r][c + i].sym = convert(msg[i]);
 		}
 	};
 
@@ -82,7 +82,7 @@ void GameInterface::initTab() {
 	write(20, 68, " hint hp- ");
 }
 
-void GameInterface::clearHpBar(int player) {
+void GameInterface::clearHp(int player) {
     int r = player == 1 ? 18 : 8, c = 1;
     toBeginCol();
     shiftRow(r);
@@ -96,7 +96,7 @@ void GameInterface::clearHpBar(int player) {
     shiftCol(85);
 }
 
-void GameInterface::clearEnterWordBar(int player) {
+void GameInterface::clearEnterWord(int player) {
     int r = player == 1 ? 18 : 8, c = 12;
     toBeginCol();
     shiftRow(r);
@@ -127,7 +127,7 @@ void GameInterface::clearHints() {
     shiftCol(85);
 }
 
-void GameInterface::drawLettersBar(const vector<char>& letters, int player) {
+void GameInterface::drawLetters(const vector<char>& letters, int player) {
     int r = player == 1 ? 12 : 2;
     toBeginCol();
     shiftRow(r);
@@ -141,7 +141,7 @@ void GameInterface::drawLettersBar(const vector<char>& letters, int player) {
     	tab[r][c + 2].sym = "╝";
 
     	tab[r + 1][c].sym = "║";
-    	tab[r + 1][c + 1].sym = string(1, letters[i]);
+    	tab[r + 1][c + 1].sym = convert(letters[i]);
     	tab[r + 1][c + 2].sym = "║";
 
     	tab[r + 2][c].sym = "╔";
@@ -164,7 +164,7 @@ void GameInterface::drawLettersBar(const vector<char>& letters, int player) {
     shiftCol(85);
 }
 
-void GameInterface::drawHpBar(int hp, int player) {
+void GameInterface::drawHp(int hp, int player) {
     string shp = std::to_string(hp);
     int r = player == 1 ? 18 : 8;
     int c = 5 - shp.size()/2;
@@ -179,4 +179,44 @@ void GameInterface::drawHpBar(int hp, int player) {
     toBeginCol();
     shiftRow(-r);
     shiftCol(85);
+}
+
+void GameInterface::drawHints(const vector<pair<string, wordStat> >& hintsAdd, const vector<pair<string, wordStat> >& hintsDel) {
+	auto makeHint = [&](int r, int c, string word, wordStat s) -> void {
+		for (int j = 0; j < word.size(); ++j) {
+			tab[r][c + j + 1].sym = convert(word[j]);
+		} 
+		string add = std::to_string(s.add);
+		string del = std::to_string(s.del);
+		for (int j = 0; j < add.size(); ++j) {
+			tab[r][c + 12].sym = convert(add[j]);
+		}
+		for (int j = 0; j < del.size(); ++j) {
+			tab[r][c + 16].sym = convert(del[j]);
+		}
+	};
+
+	toBeginCol();
+	vector< vector<pair<string, wordStat> > > h = {hintsAdd, hintsDel};
+	for (int i = 0; i < 2; ++i) {
+		if (h[i].size() > 19) {
+			h[i].resize(19);
+		}
+		int c = 43 + i*(64 - 43), r = 19;
+		shiftCol(c);
+		shiftRow(r);
+		for (auto [word, stat] : h[i]) {
+			makeHint(r, c, word, stat);
+			for (int j = 0; j < 20; ++j) {
+				tab[r][c + j].paint();
+			}
+			shiftRow(-1);
+			shiftCol(-20);
+			r--;
+		}
+		shiftRow(-r);
+		toBeginCol();
+	}
+
+	shiftCol(85);
 }

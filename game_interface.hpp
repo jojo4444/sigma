@@ -23,12 +23,13 @@ public:
 private:
 	void initTab();
  	
-	void clearHpBar(int player);
-	void clearEnterWordBar(int player);
+	void clearHp(int player);
+	void clearEnterWord(int player);
 	void clearHints();
 
-	void drawHpBar(int hp, int player);
-  	void drawLettersBar(const vector<char>& lettters, int player);
+	void drawHp(int hp, int player);
+  	void drawLetters(const vector<char>& lettters, int player);
+  	void drawHints(const vector<pair<string, wordStat> >& hintsAdd, const vector<pair<string, wordStat> >& hintsDel);
 
 	cell tab[DEFAULT_H][DEFAULT_W];
 };
@@ -61,7 +62,8 @@ private:
 1   |                                         |                    |                    |
 0   +-----------------------------------------+--------------------+--------------------+|cursor = default|
     0          |11                            |42                  |63                 84|85
-
+                                               ..........  .   .
+                                                           +12 +16
 default - (85, 0)
 
 shiftCol(-85);
