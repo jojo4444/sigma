@@ -1,11 +1,16 @@
 #include "dict.hpp"
 #include "game.hpp"
+#include "painter.hpp"
 
 int main() {
 	Dict d;
 
+	cell c;
 	for (int i = 0; i < 100; ++i) {
-		std::cout << d.getLet();
+		c.sym = d.getLet();
+		c.fg = Color(255 - i, 0, 255 - i);
+		c.bg = Color(i, i, 0);
+		c.paint();
 	}
 	std::cout << "\n";
 
