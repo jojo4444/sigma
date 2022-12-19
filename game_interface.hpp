@@ -3,11 +3,13 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 
 #include "game.hpp"
 #include "painter.hpp"
 
 using std::vector;
+using std::map;
 
 const Color BG_COLOR = Color(43, 174, 102);
 const Color FG_COLOR = Color(252, 246, 245);
@@ -28,7 +30,7 @@ public:
 	GameInterface(const Game& g);
 
  	void draw(const Game& g, int player);
- 	void drawInput(const string& word, wordStat s, int player);
+ 	void drawInput(const Game& g, const string& word, wordStat s, int player);
 
 private:
 	void initTab();
@@ -38,6 +40,7 @@ private:
 	void clearHints();
 
 	void drawHp(int hp, int player);
+	void drawLetters(const vector<char>& lettters, int player, const string& token);
   	void drawLetters(const vector<char>& lettters, int player);
   	void drawHints(const pair<vectorHints, vectorHints>& h);
 

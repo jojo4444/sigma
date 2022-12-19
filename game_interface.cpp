@@ -43,10 +43,11 @@ void GameInterface::draw(const Game& g, int player) {
 	std::cout << std::flush;
 }
 
-void GameInterface::drawInput(const string& word, wordStat s, int player) {
+void GameInterface::drawInput(const Game& g, const string& word, wordStat s, int player) {
 	int r = player == 1 ? 18 : 8;
 	int c = 12;
 
+	drawLetters(g.getPlayer(player).getLets(), player, word);
 	clearInput(player);
 	for (int j = 0; j < word.size(); ++j) {
 		tab[r][c + 1 + j].sym = convert(word[j]);
@@ -179,8 +180,18 @@ void GameInterface::clearHints() {
     shiftCol(DEFAULT_W);
 }
 
-void GameInterface::drawLetters(const vector<char>& letters, int player) {
-    int r = player == 1 ? 12 : 2;
+map<char, int> parseToken(const string& s){
+	map<char, int> res;
+	for (char c : s){
+		res[c]++;
+	}
+	return res;
+}
+
+void GameInterface::drawLetters(const vector<char>& letters, int player, const string& token){
+	map<char, int> cnt = parseToken(token);
+
+	int r = player == 1 ? 12 : 2;
     toBeginCol();
     shiftRow(r);
 
@@ -193,14 +204,20 @@ void GameInterface::drawLetters(const vector<char>& letters, int player) {
     for (int i = 0; i < letters.size(); ++i) {
     	int c = 4 + i*4;
     	shiftCol(c);
+		bool isActive = cnt[letters[i]] > 0;
 
     	for (int dr = 0; dr < 3; ++dr) {
     		for (int dc = 0; dc < 3; ++dc) {
     			tab[r + dr][c + dc].sym = board[dr][dc];
-    			tab[r + dr][c + dc].fg = CARD_COLOR;
+    			tab[r + dr][c + dc].fg = isActive? FG_COLOR_ACTIVE : FG_COLOR;
+				tab[r + dr][c + dc].bg = isActive? BG_COLOR_ACTIVE : BG_COLOR;
     		}
     	}
     	tab[r + 1][c + 1].sym = convert(letters[i]);
+		tab[r + 1][c + 1].fg = isActive? FG_COLOR_ACTIVE : FG_COLOR;
+		tab[r + 1][c + 1].bg = isActive? BG_COLOR_ACTIVE : BG_COLOR;
+
+		cnt[letters[i]]--;
 
     	for (int j = 0; j < 3; ++j) {
 	    	tab[r + j][c].paint();
@@ -216,6 +233,10 @@ void GameInterface::drawLetters(const vector<char>& letters, int player) {
 
     shiftRow(-r);
     shiftCol(DEFAULT_W);
+}
+
+void GameInterface::drawLetters(const vector<char>& letters, int player) {
+	drawLetters(letters, player, "");
 }
 
 void GameInterface::drawHp(int hp, int player) {

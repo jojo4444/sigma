@@ -30,7 +30,7 @@ int main() {
 			if (!g.getPlayer(player).checkTurn(token)){
 				token.pop_back();
 			}
-			cli.drawInput(token, d.getWordStat(token), player);
+			cli.drawInput(g, token, d.getWordStat(token), player);
 		}
 	};
 
