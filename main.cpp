@@ -19,16 +19,13 @@ int main() {
 			if (c == '\n') {
 				break;
 			}
-			if (c == 127) {
-				if (!token.empty()) {
-					token.pop_back();
-				}
-			}
-			if (c >= 'a' && c <= 'z' && token.size() < DEFAULT_PLAYER_LETTERS_COUNT) { 
-				token.push_back(c);
-			}
-			if (!g.getPlayer(player).checkTurn(token)){
+			if (c == 127 && !token.empty()) {
 				token.pop_back();
+			} else if (c != 127 && (c < 'a' || c > 'z')) {
+				continue;
+			}
+			if (token.size() < DEFAULT_PLAYER_LETTERS_COUNT && g.getPlayer(player).checkTurn(token + convert(c))) {
+				token.push_back(c);
 			}
 			cli.drawInput(g, token, d.getWordStat(token), player);
 		}

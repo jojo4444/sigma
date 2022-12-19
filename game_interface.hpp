@@ -9,7 +9,6 @@
 #include "painter.hpp"
 
 using std::vector;
-using std::map;
 
 const Color BG_COLOR = Color(43, 174, 102);
 const Color FG_COLOR = Color(252, 246, 245);
