@@ -27,6 +27,9 @@ int main() {
 			if (c >= 'a' && c <= 'z' && token.size() < DEFAULT_PLAYER_LETTERS_COUNT) { 
 				token.push_back(c);
 			}
+			if (!g.getPlayer(player).checkTurn(token)){
+				token.pop_back();
+			}
 			cli.drawInput(token, d.getWordStat(token), player);
 		}
 	};
