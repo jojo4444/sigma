@@ -92,9 +92,11 @@ shiftCol(85);
  - на выходе позиция курсора = default
 
 задачи:
- - формула для hp+-
- - разделение hints по +- 
- - hgeth --> enter word
- - enter word --> научиться word stat + find dict + error message
+ - сердечки и мечи (с)
+ - карты слов покрасить в градиент, котоырй сочитается с зеленым
+ - запрещать некорректный ввод
+ - раскраска кард
+ 	- activateLetter(char c)
+ 	- deactivateLetter(char c)
 */
 

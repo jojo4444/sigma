@@ -7,7 +7,7 @@
 
 using std::string;
 
-const int NODES_MAX = 4000000;
+const int NODES_MAX = 1025434*1.1;
 
 struct Node {
 	int to[26];
