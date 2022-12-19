@@ -131,8 +131,26 @@ void GameInterface::initTab() {
 
 	write(20, 4, " hp ");
 	write(20, 19, " enter word ");
-	write(20, 47, " hint hp- ");
-	write(20, 68, " hint hp+ ");
+	write(20, 43, " hint   ");
+	write(20, 64, " hint   ");
+	tab[20][49].sym = "⚔";
+	tab[20][70].sym = "❤";
+
+	tab[20][55].sym = "❤";
+	tab[20][55].fg = HP_ADD_COLOR;
+	tab[20][56].sym = " ";
+	
+	tab[20][59].sym = "⚔";
+	tab[20][59].fg = HP_DEL_COLOR;
+	tab[20][60].sym = " ";
+
+	tab[20][76].sym = "❤";
+	tab[20][76].fg = HP_ADD_COLOR;
+	tab[20][77].sym = " ";
+	
+	tab[20][80].sym = "⚔";
+	tab[20][80].fg = HP_DEL_COLOR;
+	tab[20][81].sym = " ";
 }
 
 void GameInterface::clearHp(int player) {
@@ -260,12 +278,12 @@ void GameInterface::drawHints(const pair<vectorHints, vectorHints>& hints) {
 		string add = std::to_string(s.add);
 		string del = std::to_string(s.del);
 		for (int j = 0; j < add.size(); ++j) {
-			tab[r][c + 12].sym = convert(add[j]);
-			tab[r][c + 12].fg = HP_ADD_COLOR;
+			tab[r][c + 12 + j].sym = convert(add[j]);
+			tab[r][c + 12 + j].fg = HP_ADD_COLOR;
 		}
 		for (int j = 0; j < del.size(); ++j) {
-			tab[r][c + 16].sym = convert(del[j]);
-			tab[r][c + 16].fg = HP_DEL_COLOR;
+			tab[r][c + 16 + j].sym = convert(del[j]);
+			tab[r][c + 16 + j].fg = HP_DEL_COLOR;
 		}
 	};
 

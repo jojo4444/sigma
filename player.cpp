@@ -43,3 +43,8 @@ bool Player::checkTurn(const string& word) const {
 void Player::addNewLetters(const vector<char>& nlet) {    
     let_.insert(let_.end(), nlet.begin(), nlet.end());
 }
+
+void Player::updateLetters(const vector<char>& nlet) {    
+    let_ = nlet;
+}
+

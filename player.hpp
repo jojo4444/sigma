@@ -17,6 +17,7 @@ public:
 	bool checkTurn(const string& word) const;
 
 	void addNewLetters(const vector<char>& nlet);
+	void updateLetters(const vector<char>& nlet);
 
 	int getHp() const;
 	void updHp(int dh);

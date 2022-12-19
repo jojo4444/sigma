@@ -99,6 +99,8 @@ wordStat Dict::getWordStat(const string& word) const {
 			add++;
 		}
 	}
+	del *= (1 + (word.size() >= 8) + (word.size() >= 9));
+	add *= (10 - word.size());
 	return wordStat(add, del);
 }
 

@@ -50,6 +50,12 @@ void Game::go(const std::string& word, int player) {
     current->addNewLetters(generateLetters(word.size()));
 
     hints_ = dict_->getHints(opposite->getLets());
+
+    while (hints_.first.empty() && opposite->getHp() > 0) {
+        opposite->updHp(-((opposite->getHp() + 1)/2));
+        opposite->updateLetters(generateLetters(DEFAULT_PLAYER_LETTERS_COUNT));
+        hints_ = dict_->getHints(opposite->getLets());
+    }
 }
 
 bool Game::finish() const {
