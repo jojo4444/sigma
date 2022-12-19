@@ -43,10 +43,11 @@ void GameInterface::draw(const Game& g, int player) {
 	std::cout << std::flush;
 }
 
-void GameInterface::drawInput(const string& word, wordStat s, int player) {
+void GameInterface::drawInput(const Game& g, const string& word, wordStat s, int player) {
 	int r = player == 1 ? 18 : 8;
 	int c = 12;
 
+	drawLetters(g.getPlayer(player).getLets(), player, word);
 	clearInput(player);
 	for (int j = 0; j < word.size(); ++j) {
 		tab[r][c + 1 + j].sym = convert(word[j]);
@@ -179,8 +180,13 @@ void GameInterface::clearHints() {
     shiftCol(DEFAULT_W);
 }
 
-void GameInterface::drawLetters(const vector<char>& letters, int player) {
-    int r = player == 1 ? 12 : 2;
+void GameInterface::drawLetters(const vector<char>& letters, int player, const string& token) {
+	std::map<char, int> cnt;
+	for (char c : token) {
+		cnt[c]++;
+	}
+	
+	int r = player == 1 ? 12 : 2;
     toBeginCol();
     shiftRow(r);
 
@@ -194,13 +200,20 @@ void GameInterface::drawLetters(const vector<char>& letters, int player) {
     	int c = 4 + i*4;
     	shiftCol(c);
 
+		bool isActive = cnt[letters[i]]-- > 0;
+		Color bg = isActive ? BG_COLOR_ACTIVE : BG_COLOR;
+		Color fg = isActive ? FG_COLOR_ACTIVE : FG_COLOR;
+
     	for (int dr = 0; dr < 3; ++dr) {
     		for (int dc = 0; dc < 3; ++dc) {
     			tab[r + dr][c + dc].sym = board[dr][dc];
-    			tab[r + dr][c + dc].fg = CARD_COLOR;
+    			tab[r + dr][c + dc].fg = fg;
+				tab[r + dr][c + dc].bg = bg;
     		}
     	}
     	tab[r + 1][c + 1].sym = convert(letters[i]);
+		tab[r + 1][c + 1].fg = fg;
+		tab[r + 1][c + 1].bg = bg;
 
     	for (int j = 0; j < 3; ++j) {
 	    	tab[r + j][c].paint();
@@ -216,6 +229,10 @@ void GameInterface::drawLetters(const vector<char>& letters, int player) {
 
     shiftRow(-r);
     shiftCol(DEFAULT_W);
+}
+
+void GameInterface::drawLetters(const vector<char>& letters, int player) {
+	drawLetters(letters, player, "");
 }
 
 void GameInterface::drawHp(int hp, int player) {
@@ -278,18 +295,19 @@ void GameInterface::drawHints(const pair<vectorHints, vectorHints>& hints) {
 }
 
 void GameInterface::setActive(int player) {
-	for (int i = 0; i < DEFAULT_H; ++i) {
-		for (int j = 0; j < DEFAULT_W; ++j) {
-			tab[i][j].bg = BG_COLOR;
-			tab[i][j].fg = FG_COLOR;
+	int dw = 10;
+	int dh = 3;
+	int c = 1;
+
+	int r = player == 1 ? 7 : 17;
+	for (int i = 0; i < dh; ++i) {
+		for (int j = 0; j < dw; ++j) {
+			tab[r + i][c + j].bg = BG_COLOR;
+			tab[r + i][c + j].fg = FG_COLOR;
 		}
 	}
 
-	int dw = 10;
-	int dh = 3;
-	int r = player == 1 ? 17 : 7;
-	int c = 1;
-
+	r = player == 1 ? 17 : 7;
 	for (int i = 0; i < dh; ++i) {
 		for (int j = 0; j < dw; ++j) {
 			tab[r + i][c + j].bg = BG_COLOR_ACTIVE;

@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <map>
 
 #include "game.hpp"
 #include "painter.hpp"
@@ -28,7 +29,7 @@ public:
 	GameInterface(const Game& g);
 
  	void draw(const Game& g, int player);
- 	void drawInput(const string& word, wordStat s, int player);
+ 	void drawInput(const Game& g, const string& word, wordStat s, int player);
 
 private:
 	void initTab();
@@ -38,6 +39,7 @@ private:
 	void clearHints();
 
 	void drawHp(int hp, int player);
+	void drawLetters(const vector<char>& lettters, int player, const string& token);
   	void drawLetters(const vector<char>& lettters, int player);
   	void drawHints(const pair<vectorHints, vectorHints>& h);
 
